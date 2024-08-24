@@ -1,0 +1,22 @@
+.button{
+    background-color: var(--primeBlue);
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.button:hover{
+   
+}
+
+.loading{
+    width: 45px;
+    height: 45px;
+    margin: -20px;
+}

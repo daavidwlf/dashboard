@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    background-color: var(--backGray);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    gap: 5px
+}
+
+.container .icon{
+    color: var(--midGray); 
+    font-size: 15px;
+    margin-bottom: 1px;
+}
+
+.container .input{
+    background-color: transparent;
+    border-style: none;
+    text-decoration: none;
+    outline: none;
+    font-size: 16px;
+}
