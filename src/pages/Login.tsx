@@ -46,15 +46,15 @@ export default function Login(){
         setErr(customError.NONE)
 
         API.POST(
-            "/admin/login", 
-            {
+            "/admin/login", {
                 "email": email(),
                 "password": password(),
             }, 
             (response: AxiosResponse) => {
-                console.log("success")
                 const token:string = response?.data["X-JWT-Token"]
+                const adminID:string = response?.data["adminID"]
                 localStorage.setItem("X-JWT-Token",  token)
+                localStorage.setItem("adminID",  adminID)
                 navigate('/dashboard')
             },
             (err: AxiosError) => {
