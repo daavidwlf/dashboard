@@ -1,12 +1,12 @@
 import { createEffect, createSignal } from 'solid-js'
 import TextInput from '../components/TextInput'
 import styles from './Login.module.css'
-import API from '../api/API'
+import API from '../data/API'
 import { AxiosError, AxiosResponse } from 'axios'
 import LottieAnimation from '../components/LottieAnimation'
 import loadingAnimation from '../assets/animations/loadingWhite.json'
 import { useNavigate } from '@solidjs/router'
-import { customError } from '../api/Enums'
+import { customError } from '../data/Enums'
 
 export default function Login(){
 

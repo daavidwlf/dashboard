@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
-import API from "../api/API"
-import Admin from "../api/Types"
+import API from "../data/API"
+import { Admin } from "../data/Types"
 
 export default function fetchAdmin(adminID: string){
     return new Promise<Admin>((resolve, reject) => {

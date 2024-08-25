@@ -3,7 +3,7 @@ import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
 import { createEffect, createResource, createSignal } from 'solid-js';
 import SideChip from '../components/SideChip';
-import {Tabs} from '../api/Enums';
+import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
 import fetchAdmin from '../utils/fetchAdmin';
@@ -22,7 +22,7 @@ export default function Dashboard(){
     const navigate = useNavigate()
 
     const [adminID, setAdminID] = createSignal<string | null>(null);
-    const [adminData, adminErr ] = createResource(adminID, fetchAdmin)
+    const [adminData, adminErr] = createResource(adminID, fetchAdmin)
     
     const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS)
 

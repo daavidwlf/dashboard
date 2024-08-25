@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import API from "../api/API";
+import API from "../data/API";
 import { AxiosError, AxiosResponse } from "axios";
 
 const [isAuthenticated, setIsAuthenticated] = createSignal(false);
