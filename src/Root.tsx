@@ -6,6 +6,7 @@ import styles from './App.module.css';
 
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard';
+import _404 from './pages/_404';
 
 const Root: Component = () => {
 
@@ -14,6 +15,7 @@ const Root: Component = () => {
       <Router>
           <Route path={"/"} component={Login}/>
           <Route path={"/dashboard"} component={Dashboard}/>
+          <Route path={"*404"} component={_404}/>
       </Router>
     </div>
   );
