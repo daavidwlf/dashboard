@@ -1,0 +1,45 @@
+.containerSelected{
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 15px;
+}
+
+.containerSelected .labelSelected{
+    display: flex;
+    align-items: flex-start;
+    flex: 3;
+    font-size: 16px;
+}
+
+.containerSelected .iconSelected{
+    flex: 1;
+    font-size: 16px;
+    color: var(--accentBlue)
+}
+
+.container{
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    color: var(--midGray);
+}
+
+.container .label{
+    display: flex;
+    align-items: flex-start;
+    flex: 3;
+    font-size: 16px;
+}
+
+.container .icon{
+    flex: 1;
+    font-size: 16px;
+}

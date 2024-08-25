@@ -14,9 +14,17 @@ if (!dev){
 
 
 API.GET = (query:string, callback:Function, callbackErr?:Function) => {
-   axios.get(url + query)
-   .then(response => callback(response.data))
-   .catch(err => callbackErr? callbackErr(err) : console.log(err))
+    const token = localStorage.getItem("X-JWT-Token") || "none";
+
+    axios.get(url + query, {
+        headers: {
+            "X-JWT-Token": token,
+            "Content-Type": "application/json",
+        },
+        withCredentials: true
+    })
+    .then(response => callback(response.data))
+    .catch(err => callbackErr? callbackErr(err) : console.log(err))
 }
 
 API.POST = async (query: string, data: any, callback: Function, callbackErr?: Function, setLoading?: Function) => {

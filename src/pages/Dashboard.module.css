@@ -1,0 +1,64 @@
+.container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.container .sidebar{
+    height: 100%;
+    width: 200px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 40px;
+    padding-right: 40px;
+    flex-direction: column;
+}
+
+.container .sidebar .banner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 18px;
+    height: 100px;
+}
+
+.container .sidebar .chips{
+    display: flex;
+    flex-direction: column;
+    gap: 7px
+}
+
+.container .canvas{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-right: 40px;
+}
+
+.container .canvas .topBar{
+    height: 120px;
+    display: flex;
+    align-items: center;
+}
+
+.container .canvas .topBar .topRight{
+
+}
+
+.container .canvas .topBar .topLeft{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.container .canvas .tabBox{
+    height: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 15px;
+    border-radius: 15px;
+    padding: 20px;
+}

@@ -1,7 +1,8 @@
-const Types:any= []
-
-Types.adminLogin = {
-    
+type Admin  = {
+    adminID: string
+    userName: string
+    email: string
+    Created: number
 }
 
-export default Types;
+export default Admin
