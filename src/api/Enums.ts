@@ -1,6 +1,12 @@
-enum Tabs {
+export enum Tabs {
     ADMINS,
     USERS
 }
 
-export default Tabs;
+export enum customError {
+    NONE,
+    BOTH,
+    PASSWORD,
+    EMAIL,
+    UNKNOWN
+}

@@ -2,19 +2,11 @@ import { createEffect, createSignal } from 'solid-js'
 import TextInput from '../components/TextInput'
 import styles from './Login.module.css'
 import API from '../api/API'
-import PrimaryButton from '../components/PrimaryButton'
-import { Axios, AxiosError, AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import LottieAnimation from '../components/LottieAnimation'
 import loadingAnimation from '../assets/animations/loadingWhite.json'
-import { Navigate, redirect, useNavigate } from '@solidjs/router'
-
-enum customError {
-    NONE,
-    BOTH,
-    PASSWORD,
-    EMAIL,
-    UNKNOWN
-}
+import { useNavigate } from '@solidjs/router'
+import { customError } from '../api/Enums'
 
 export default function Login(){
 
@@ -24,8 +16,6 @@ export default function Login(){
     const [password, setPassword] = createSignal("")
 
     const [err, setErr] = createSignal(customError.NONE)
-
-    const [authErr, setAuthErr] = createSignal(null)
 
     const [loading, setLoading] = createSignal(false)
 

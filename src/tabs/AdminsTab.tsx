@@ -1,6 +1,6 @@
-import styles from './AdminTab.module.css'
+import styles from './AdminsTab.module.css'
 
-export default function AdminTab(){
+export default function AdminsTab(){
     return(
         <div class={styles.container}>
             Admin

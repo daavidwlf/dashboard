@@ -2,15 +2,13 @@ import { useNavigate } from '@solidjs/router'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
 import { createEffect, createResource, createSignal } from 'solid-js';
-import API from '../api/API';
-import Admin from '../api/Types';
-import { Axios, AxiosError } from 'axios';
 import SideChip from '../components/SideChip';
-import Tabs from '../api/Enums';
-import AdminTab from '../tabs/AdminTab';
+import {Tabs} from '../api/Enums';
+import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
+import fetchAdmin from '../utils/fetchAdmin';
 
-let dateFormat = new Intl.DateTimeFormat('de', {
+const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -19,26 +17,20 @@ let dateFormat = new Intl.DateTimeFormat('de', {
     timeZone: 'Europe/Berlin',
 });
 
-function fetchAdmin(adminID: string){
-    return new Promise<Admin>((resolve, reject) => {
-        API.GET("/admin/"+adminID, 
-        (data: Admin) => {
-           resolve(data)
-        },
-        (err: AxiosError) => {
-            reject(err)
-        },
-        null
-        )
-    })
-}
-
 export default function Dashboard(){
+
+    const navigate = useNavigate()
 
     const [adminID, setAdminID] = createSignal<string | null>(null);
     const [adminData, adminErr ] = createResource(adminID, fetchAdmin)
-
+    
     const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS)
+
+    function logout(){
+        localStorage.removeItem("adminID")
+        localStorage.removeItem("X-JWT-Token")
+        navigate("/")  
+    }
 
     createEffect(()=>{
         const adminID = localStorage.getItem("adminID")
@@ -46,20 +38,6 @@ export default function Dashboard(){
             setAdminID(adminID)
         }
     })
-
-    const navigate = useNavigate()
-
-    const logout = () =>{
-        localStorage.removeItem("adminID")
-        localStorage.removeItem("X-JWT-Token")
-        navigate("/")   
-    }
-
-    createEffect(()=>{
-        console.log(selected())
-    })
-
-    console.log(selected())
 
     return(
         <div class={styles.container}>
@@ -88,18 +66,18 @@ export default function Dashboard(){
             <div class={styles.canvas}>
                 <div class={styles.topBar}>
                     <div class={styles.topRight}>
-                        <h1>{adminData()?.userName}</h1>
+                        <h1>Hi, {adminData()?.userName}</h1>
                         <h3>{dateFormat.format(Date.now())}</h3>
                     </div>
                     <div class={styles.topLeft}>
                         <PrimaryButton
                             text='Logout'
-                            func={logout}
+                            func={()=>logout()}
                         />
                     </div>
                 </div>
                 <div class={styles.tabBox}>
-                    {selected() === Tabs.ADMINS && <AdminTab/>}
+                    {selected() === Tabs.ADMINS && <AdminsTab/>}
                     {selected() === Tabs.USERS && <UsersTab/>}
                 </div>
             </div>
