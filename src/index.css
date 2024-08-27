@@ -6,8 +6,9 @@
   --midGray: rgb(105, 105, 112);
   --primeBlue: rgb(112, 134, 161);
   --accentBlue: rgb(134, 160, 191);
-  --secondaryBlue: rgb(167, 184, 204);
+  --lightBlue: rgba(112, 134, 161, 0.25);
   --text: rgb(11, 13, 15);
+  --red: rgb(181, 36, 36);
 }
 
 body {

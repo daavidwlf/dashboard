@@ -1,4 +1,4 @@
-import { useNavigate } from '@solidjs/router'
+import { useNavigate, useSearchParams } from '@solidjs/router'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
 import { createEffect, createResource, createSignal } from 'solid-js';
@@ -7,6 +7,10 @@ import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
 import fetchAdmin from '../utils/fetchAdmin';
+import EditAdminPopup from '../popups/EditAdminPopup';
+import { usePopup } from '../utils/PopupContext';
+import { Admin } from '../data/Types';
+import LoadingPage from '../components/LoadingPage';
 
 const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
@@ -22,9 +26,23 @@ export default function Dashboard(){
     const navigate = useNavigate()
 
     const [adminID, setAdminID] = createSignal<string | null>(null);
-    const [adminData, adminErr] = createResource(adminID, fetchAdmin)
+    const [reloadCounter, setReloadCounter] = createSignal(0);
+
+    const [loading, seLoading] = createSignal(false)
+
+    //this shit sucks ass but it forces an auto update
+    const [adminData, adminErr] = createResource(
+        () => [adminID(), reloadCounter()],
+        async ([id]) => {
+            if (!id) return null;
+            // @ts-ignore
+            return fetchAdmin(id);
+        }
+    );
     
-    const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS)
+    const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS);
+
+    const [editAdmin, setEditAdmin] = createSignal(null)
 
     function logout(){
         localStorage.removeItem("adminID")
@@ -38,6 +56,13 @@ export default function Dashboard(){
             setAdminID(adminID)
         }
     })
+
+    function forceReload(){
+        setReloadCounter(count => count + 1);
+    }
+
+    if(loading())
+        return <LoadingPage/>
 
     return(
         <div class={styles.container}>
@@ -77,10 +102,11 @@ export default function Dashboard(){
                     </div>
                 </div>
                 <div class={styles.tabBox}>
-                    {selected() === Tabs.ADMINS && <AdminsTab/>}
+                    {selected() === Tabs.ADMINS && <AdminsTab edit={setEditAdmin}/>}
                     {selected() === Tabs.USERS && <UsersTab/>}
                 </div>
             </div>
+            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} forceReload={forceReload} setLoading={seLoading}/>}
         </div>
     )
 }

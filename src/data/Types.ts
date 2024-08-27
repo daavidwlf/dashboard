@@ -2,5 +2,10 @@ export type Admin  = {
     adminID: string
     userName: string
     email: string
-    Created: number
+    created: number
+}
+
+export type editAdminRequest = {
+    userName: string
+    email: string
 }

@@ -15,11 +15,13 @@ if (!dev){
 
 API.GET = (query:string, callback:Function, callbackErr?:Function) => {
     const token = localStorage.getItem("X-JWT-Token") || "none";
+    const id = localStorage.getItem("adminID") || "none";
 
     axios.get(url + query, {
         headers: {
             "X-JWT-Token": token,
             "Content-Type": "application/json",
+            "ID": id
         },
         withCredentials: true
     })
@@ -30,8 +32,19 @@ API.GET = (query:string, callback:Function, callbackErr?:Function) => {
 API.POST = async (query: string, data: any, callback: Function, callbackErr?: Function, setLoading?: Function) => {
     if (setLoading) setLoading(true);
 
+    const token = localStorage.getItem("X-JWT-Token") || "none";
+    const id = localStorage.getItem("adminID") || "none";
+
     try {
-        const response = await axios.post(url + query, JSON.stringify(data));
+        const response = await axios.post(url + query, JSON.stringify(data),
+    {
+        headers: {
+            "X-JWT-Token": token,
+            "Content-Type": "application/json",
+            "ID": id
+        },
+        withCredentials: true
+    });
         if (setLoading) setLoading(false);
         callback(response);
     } catch (err) {
