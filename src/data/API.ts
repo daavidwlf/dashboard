@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 const API:any = []
 
@@ -13,10 +14,13 @@ if (!dev){
 }
 
 
-API.GET = (query:string, callback:Function, callbackErr?:Function) => {
+API.GET = (query:string, callback:Function, callbackErr?:Function, setLoading?:Function) => {
+
+    if(setLoading) setLoading(true)
+
     const token = localStorage.getItem("X-JWT-Token") || "none";
     const id = localStorage.getItem("adminID") || "none";
-
+    
     axios.get(url + query, {
         headers: {
             "X-JWT-Token": token,
@@ -25,8 +29,14 @@ API.GET = (query:string, callback:Function, callbackErr?:Function) => {
         },
         withCredentials: true
     })
-    .then(response => callback(response.data))
-    .catch(err => callbackErr? callbackErr(err) : console.log(err))
+    .then((response:AxiosResponse) => {
+        callback(response.data)
+        if(setLoading) setLoading(false)
+    })
+    .catch((err: AxiosError) => {
+        callbackErr? callbackErr(err) : console.log(err)
+        if(setLoading) setLoading(false)
+    })
 }
 
 API.POST = async (query: string, data: any, callback: Function, callbackErr?: Function, setLoading?: Function) => {

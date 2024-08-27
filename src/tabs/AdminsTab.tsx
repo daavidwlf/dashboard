@@ -1,9 +1,8 @@
-import { createResource } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import AdminListComp from '../components/AdminListComp'
 import { Admin } from '../data/Types'
-import fetchAdmins from '../utils/fetchAdmins'
 import styles from './AdminsTab.module.css'
-import EditAdminPopup from '../popups/EditAdminPopup'
+import API from '../data/API'
 
 type Props = {
     edit: Function
@@ -11,7 +10,11 @@ type Props = {
 
 export default function AdminsTab({edit}:Props){
 
-    const [admins, error] = createResource<Admin[]>(fetchAdmins)
+    const [admins, setAdmins] = createSignal<Admin[]>()
+
+    createEffect(()=>{
+        API.GET("/admins?quantity=10", setAdmins, null, null)
+    })
 
     return(
         <div class={styles.container}>

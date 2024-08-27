@@ -1,16 +1,14 @@
-import { useNavigate, useSearchParams } from '@solidjs/router'
+import { useNavigate } from '@solidjs/router'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
-import { createEffect, createResource, createSignal } from 'solid-js';
+import { createEffect, createSignal } from 'solid-js';
 import SideChip from '../components/SideChip';
 import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
-import fetchAdmin from '../utils/fetchAdmin';
 import EditAdminPopup from '../popups/EditAdminPopup';
-import { usePopup } from '../utils/PopupContext';
 import { Admin } from '../data/Types';
-import LoadingPage from '../components/LoadingPage';
+import API from '../data/API';
 
 const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
@@ -21,25 +19,13 @@ const dateFormat = new Intl.DateTimeFormat('de', {
     timeZone: 'Europe/Berlin',
 });
 
-export default function Dashboard(){
+export default function Dashboard({setLoading}: {setLoading:Function}){
 
     const navigate = useNavigate()
 
-    const [adminID, setAdminID] = createSignal<string | null>(null);
-    const [reloadCounter, setReloadCounter] = createSignal(0);
+    const [adminID, setAdminID] = createSignal<string>();
+    const [adminData, setAdminData] = createSignal<Admin>()
 
-    const [loading, seLoading] = createSignal(false)
-
-    //this shit sucks ass but it forces an auto update
-    const [adminData, adminErr] = createResource(
-        () => [adminID(), reloadCounter()],
-        async ([id]) => {
-            if (!id) return null;
-            // @ts-ignore
-            return fetchAdmin(id);
-        }
-    );
-    
     const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS);
 
     const [editAdmin, setEditAdmin] = createSignal(null)
@@ -50,6 +36,7 @@ export default function Dashboard(){
         navigate("/")  
     }
 
+    //set adminID of logged in admin
     createEffect(()=>{
         const adminID = localStorage.getItem("adminID")
         if(adminID){
@@ -57,12 +44,11 @@ export default function Dashboard(){
         }
     })
 
-    function forceReload(){
-        setReloadCounter(count => count + 1);
-    }
-
-    if(loading())
-        return <LoadingPage/>
+    //fetch data of logged in admin
+    createEffect(()=>{
+        console.log(adminID())
+        API.GET("/admin/"+adminID(), setAdminData)
+    })
 
     return(
         <div class={styles.container}>
@@ -106,7 +92,7 @@ export default function Dashboard(){
                     {selected() === Tabs.USERS && <UsersTab/>}
                 </div>
             </div>
-            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} forceReload={forceReload} setLoading={seLoading}/>}
+            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} setLoading={setLoading}/>}
         </div>
     )
 }

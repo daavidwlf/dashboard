@@ -1,11 +1,10 @@
-import type { Component } from 'solid-js';
+import { createSelector, createSignal, Show, Switch, type Component } from 'solid-js';
 import { Router, Route } from "@solidjs/router";
 
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard';
 import _404 from './pages/_404';
 import RouteGuard from './components/RouteGuard';
-import { PopupProvider } from './utils/PopupContext';
+import Main from './pages/Main';
 
 const Root: Component = () => {
 
@@ -15,9 +14,7 @@ const Root: Component = () => {
           <Route path={"/"} component={Login}/>
           <Route path={"*404"} component={_404}/>
           <Route path={"/"} component={RouteGuard}>
-            <PopupProvider>
-              <Route path={"/dashboard"} component={Dashboard}/>
-            </PopupProvider>
+              <Route path={"/dashboard"} component={Main}/>
           </Route>
       </Router>
     </div>

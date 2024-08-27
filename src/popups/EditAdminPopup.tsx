@@ -1,10 +1,11 @@
 import { createSignal } from 'solid-js'
 import CloseButton from '../components/CloseButton'
 import TextInput from '../components/TextInput'
-import { Admin, editAdminRequest } from '../data/Types'
+import { Admin } from '../data/Types'
 import styles from './EditAdminPopup.module.css'
 import PrimaryButton from '../components/PrimaryButton'
-import editAdmin from '../utils/editAdmin'
+import API from '../data/API'
+import { AxiosError, AxiosResponse } from 'axios'
 
 type Props = {
     item: Admin | null
@@ -18,31 +19,32 @@ export default function EditAdminPopup({item, setEditAdmin, forceReload, setLoad
     const [userName, setUserName]= createSignal<string>("");
     const [mail, setMail] = createSignal<string>("")
 
-    async function save(){
-
+    function save(){
   
         const changes = userName() !== "" || userName() !== ""
-
-        console.log(userName())
 
         const data  = {
             "userName": userName() === "" ?  item?.userName : userName(),
             "email": mail() === "" ? item?.email : mail(),
         }
-
-        console.log(data)
     
         if(item?.adminID && changes){
 
             setLoading && setLoading(true)
-            try{
-                await editAdmin(item?.adminID, data)
-            }catch(err){
-                setLoading && setLoading(false)
-            }finally{
-                setEditAdmin(null);
-                setLoading && setLoading(false)
-            }
+            API.POST("/admins/edit/"+ item.adminID,
+                {
+                    "userName": data.userName,
+                    "email": data.email
+                },
+                (response: AxiosResponse) => {
+                    if(setLoading) setLoading(false)
+                },
+                (err: AxiosError) => {
+                    console.log(err)
+                    if(setLoading) setLoading(false)
+                },
+                null
+                )
         }
     }
 
