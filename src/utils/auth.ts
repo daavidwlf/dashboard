@@ -15,9 +15,6 @@ const validateToken = () => {
       return;
     }
 
-    console.log(token)
-    console.log(adminId)
-
     API.POST(
       "/admin/validateJWT",
       {

@@ -43,9 +43,6 @@ export default function Login(){
             (response: AxiosResponse) => {
                 const token:string = response?.data["xJwtToken"]
                 const adminId:string = response?.data["adminId"]
-                console.log(response)
-                console.log("Login: ", token)
-                console.log("Login: ", adminId)
 
                 localStorage.setItem("xJwtToken",  token)
                 localStorage.setItem("adminId",  adminId)
@@ -60,7 +57,6 @@ export default function Login(){
                     setErr(customError.PASSWORD);
                 } else {
                     setErr(customError.UNKNOWN);
-                    console.log(err)
                 }
             },
             setLoading

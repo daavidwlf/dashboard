@@ -51,7 +51,6 @@ export default function AdminListComp({item, index, setEditAdmin, setDeleteAdmin
                         <button 
                             class={styles.delete}
                             onclick={() => {
-                                console.log('Deleting admin:', item);
                                 setDeleteAdmin(item);
                             }}
                         >

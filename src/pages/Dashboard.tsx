@@ -52,9 +52,7 @@ export default function Dashboard(){
             setAdminId(id)
         }
 
-        console.log(adminId())
         API.GET("/admin/"+adminId(), setAdminData)
-
     })
 
     return(

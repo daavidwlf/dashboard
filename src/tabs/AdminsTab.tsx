@@ -18,7 +18,6 @@ export default function AdminsTab({setEditAdmin, setDeleteAdmin, setAddAdmin, re
 
     createEffect(()=>{
         rerender()
-        console.log("do")
         API.GET("/admins?quantity=10", setAdmins, null, null)
     })
 

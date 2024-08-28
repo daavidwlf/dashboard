@@ -24,7 +24,6 @@ export default function AddAdminPopup({setAddAdmin, setResultMessage}:Props){
     const [valid, setValid] = createSignal<boolean>(false)
 
     function addAdmin(){
-        console.log("add")
             API.POST("/admins/add", {
                 "userName" : userName(),
                 "email": mail(),

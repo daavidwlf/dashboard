@@ -39,10 +39,6 @@ export default function DeleteAdminPopup({item, setDeleteAdmin, setResultMessage
         }, 2000)
     }
 
-    createEffect(()=>{
-        console.log(loading())
-    })
-
     return(
         <div class={styles.container}>
                 <div class={styles.panel}>
