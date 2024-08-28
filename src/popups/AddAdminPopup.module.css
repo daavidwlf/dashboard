@@ -12,18 +12,16 @@
 .container .panel{
     background-color: white;
     width: 600px;
-    height: 400px;
+    height: 500px;
     border-radius: 20px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .container .panel .top{
    display: flex;
    margin-bottom: 20px;
-   width: 100%;
 }
 
 .container .panel .top .id{
@@ -45,8 +43,7 @@
 .container .panel .editContainer{
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    width: 100%;
+    gap: 20px
 }
 
 .container .panel .editContainer .editField{
@@ -56,7 +53,7 @@
     gap: 5px;
 }
 
-.container .panel .save{
+.container .panel .add{
     flex: 1;
     display: flex;
     align-items: flex-end;

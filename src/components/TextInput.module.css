@@ -1,10 +1,11 @@
 .container{
     display: flex;
     background-color: var(--backGray);
-    padding: 10px;
     border-radius: 10px;
     align-items: center;
-    gap: 5px
+    gap: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .container .icon{
@@ -19,4 +20,7 @@
     text-decoration: none;
     outline: none;
     font-size: 16px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

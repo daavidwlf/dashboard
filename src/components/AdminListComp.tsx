@@ -1,12 +1,12 @@
 import { createResource } from "solid-js";
 import { Admin } from "../data/Types"
 import styles from './AdminListComp.module.css'
-import editAdmins from "../utils/editAdmin";
 
 type Props = {
     item: Admin,
     index: number,
-    edit: Function
+    setEditAdmin: Function,
+    setDeleteAdmin: Function
 }
 
 const dateFormat = new Intl.DateTimeFormat('de', {
@@ -17,20 +17,22 @@ const dateFormat = new Intl.DateTimeFormat('de', {
     timeZone: 'Europe/Berlin',
 });
 
-export default function AdminListComp({item, index, edit}:Props){
+const selfID = localStorage.getItem("adminId")
+
+export default function AdminListComp({item, index, setEditAdmin, setDeleteAdmin}:Props){
 
     return(
         <div class={styles.container}>
             <span class={styles.left}>
-                <span style="flex: 2; display: flex; gap: 20px">
+                <span style="flex: 3; display: flex; gap: 20px">
                     <i class="fa-duotone fa-solid fa-user-tie-hair"></i>
                     <p><strong>{item.userName}</strong></p>
                 </span>
-                <span style="flex: 3">
+                <span style="flex: 5">
                     <p>{item.email}</p>
                 </span>
                 <span style="flex: 12">
-                    <p><span style="color: var(--accentBlue)">{item.adminID}</span></p>
+                    <p><span style="color: var(--accentBlue)">{item.adminId}</span></p>
                 </span>
             </span>
             <span class={styles.right}>
@@ -40,15 +42,29 @@ export default function AdminListComp({item, index, edit}:Props){
                 <span class={styles.controls}>
                     <button 
                         class={styles.edit}
-                        onclick={()=>edit(item)}
+                        onclick={()=>setEditAdmin(item)}
                     >
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
-                    <button 
-                        class={styles.delete}
-                    >
-                        <i class="fa-regular fa-trash"></i>
-                    </button>
+                    {
+                        selfID !== item.adminId ?
+                        <button 
+                            class={styles.delete}
+                            onclick={() => {
+                                console.log('Deleting admin:', item);
+                                setDeleteAdmin(item);
+                            }}
+                        >
+                            <i class="fa-regular fa-trash"></i>
+                        </button>
+                        :
+                        <button 
+                            class={styles.delete}
+                            style="color: var(--backGray); cursor: default"
+                        >
+                            <i class="fa-regular fa-trash"></i>
+                        </button>
+                    }
                 </span>
             </span>
         </div>

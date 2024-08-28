@@ -1,7 +1,7 @@
 import { useNavigate } from '@solidjs/router'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal} from 'solid-js';
 import SideChip from '../components/SideChip';
 import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
@@ -9,6 +9,9 @@ import UsersTab from '../tabs/UsersTab';
 import EditAdminPopup from '../popups/EditAdminPopup';
 import { Admin } from '../data/Types';
 import API from '../data/API';
+import DeleteAdminPopup from '../popups/DeleteAdminPopup';
+import AddAdminPopup from '../popups/AddAdminPopup';
+import ResultPopup from '../popups/ResultPopup';
 
 const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
@@ -19,35 +22,39 @@ const dateFormat = new Intl.DateTimeFormat('de', {
     timeZone: 'Europe/Berlin',
 });
 
-export default function Dashboard({setLoading}: {setLoading:Function}){
+export default function Dashboard(){
 
     const navigate = useNavigate()
 
-    const [adminID, setAdminID] = createSignal<string>();
+    const [rerender, setRerender] = createSignal<number>(0)
+
+    const [adminId, setAdminId] = createSignal<string>();
     const [adminData, setAdminData] = createSignal<Admin>()
 
-    const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS);
+    const [selected, setSelected] = createSignal<Tabs>(Tabs.ADMINS);
 
-    const [editAdmin, setEditAdmin] = createSignal(null)
+    const [editAdmin, setEditAdmin] = createSignal<Admin | null>(null)
+    const [deleteAdmin, setDeleteAdmin] = createSignal<Admin | null>(null)
+    const [addAdmin, setAddAdmin] = createSignal<boolean>(false)
+    const [resultMessage, setResultMessage] = createSignal<string | null>(null)
 
     function logout(){
-        localStorage.removeItem("adminID")
-        localStorage.removeItem("X-JWT-Token")
+        localStorage.removeItem("adminId")
+        localStorage.removeItem("xJwtToken")
         navigate("/")  
     }
 
-    //set adminID of logged in admin
     createEffect(()=>{
-        const adminID = localStorage.getItem("adminID")
-        if(adminID){
-            setAdminID(adminID)
-        }
-    })
+        rerender()
 
-    //fetch data of logged in admin
-    createEffect(()=>{
-        console.log(adminID())
-        API.GET("/admin/"+adminID(), setAdminData)
+        const id = localStorage.getItem("adminId")
+        if(id){
+            setAdminId(id)
+        }
+
+        console.log(adminId())
+        API.GET("/admin/"+adminId(), setAdminData)
+
     })
 
     return(
@@ -63,14 +70,14 @@ export default function Dashboard({setLoading}: {setLoading:Function}){
                         tab={Tabs.ADMINS}
                         icon={<i class="fa-duotone fa-solid fa-user-tie-hair"></i>}
                         selected={()=>selected()}
-                        setSelected={()=>setSeleted(Tabs.ADMINS)}
+                        setSelected={()=>setSelected(Tabs.ADMINS)}
                     />
                     <SideChip
                         label='Users'
                         tab={Tabs.USERS}
                         icon={<i class="fa-duotone fa-solid fa-user"></i>}
                         selected={()=>selected()}
-                        setSelected={()=>setSeleted(Tabs.USERS)}
+                        setSelected={()=>setSelected(Tabs.USERS)}
                     />
                 </div>
             </div>
@@ -88,11 +95,14 @@ export default function Dashboard({setLoading}: {setLoading:Function}){
                     </div>
                 </div>
                 <div class={styles.tabBox}>
-                    {selected() === Tabs.ADMINS && <AdminsTab edit={setEditAdmin}/>}
+                    {selected() === Tabs.ADMINS && <AdminsTab setEditAdmin={setEditAdmin} setDeleteAdmin={setDeleteAdmin} setAddAdmin={setAddAdmin} rerender={rerender}/>}
                     {selected() === Tabs.USERS && <UsersTab/>}
                 </div>
             </div>
-            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} setLoading={setLoading}/>}
+            {deleteAdmin() && <DeleteAdminPopup item={deleteAdmin()} setDeleteAdmin={setDeleteAdmin} setResultMessage={setResultMessage}/>}
+            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} setResultMessage={setResultMessage}/>}
+            {addAdmin() && <AddAdminPopup setAddAdmin={setAddAdmin} setResultMessage={setResultMessage}/>}
+            {resultMessage() && <ResultPopup resultMessage={resultMessage()} setResultMessage={setResultMessage} setRerender={setRerender}/>}
         </div>
     )
 }

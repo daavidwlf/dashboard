@@ -18,13 +18,14 @@ API.GET = (query:string, callback:Function, callbackErr?:Function, setLoading?:F
 
     if(setLoading) setLoading(true)
 
-    const token = localStorage.getItem("X-JWT-Token") || "none";
-    const id = localStorage.getItem("adminID") || "none";
-    
+    const token = localStorage.getItem("xJwtToken") || "none";
+    const id = localStorage.getItem("adminId") || "none";
+
     axios.get(url + query, {
         headers: {
-            "X-JWT-Token": token,
+            "xJwtToken": token,
             "Content-Type": "application/json",
+            //temp
             "ID": id
         },
         withCredentials: true
@@ -42,14 +43,14 @@ API.GET = (query:string, callback:Function, callbackErr?:Function, setLoading?:F
 API.POST = async (query: string, data: any, callback: Function, callbackErr?: Function, setLoading?: Function) => {
     if (setLoading) setLoading(true);
 
-    const token = localStorage.getItem("X-JWT-Token") || "none";
-    const id = localStorage.getItem("adminID") || "none";
+    const token = localStorage.getItem("xJwtToken") || "none";
+    const id = localStorage.getItem("adminId") || "none";
 
     try {
         const response = await axios.post(url + query, JSON.stringify(data),
     {
         headers: {
-            "X-JWT-Token": token,
+            "xJwtToken": token,
             "Content-Type": "application/json",
             "ID": id
         },
