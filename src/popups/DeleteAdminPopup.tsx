@@ -32,7 +32,7 @@ export default function DeleteAdminPopup({item, setDeleteAdmin, setResultMessage
                 setLoading(false)
                 setDeleteAdmin(null)
                 // @ts-ignore
-                setResultMessage(err.response?.data?.message)
+                setResultMessage(err.response?.data?.message ? err.response?.data?.message : err.message)
             }, 
             null
         )

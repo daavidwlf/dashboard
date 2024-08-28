@@ -38,7 +38,7 @@ export default function AddAdminPopup({setAddAdmin, setResultMessage}:Props){
                 setLoading(false)
                 setAddAdmin(null)
                 // @ts-ignore
-                setResultMessage(err.response?.data?.message)
+                setResultMessage(err.response?.data?.message ? err.response?.data?.message : err.message)
             }, 
             null
         )
