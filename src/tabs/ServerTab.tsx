@@ -10,16 +10,18 @@ export default function ServerTap(){
     const [refresh, setRefresh] = createSignal(0)
     const [reloadAnimation, setReloadAnimation] = createSignal(false)
 
+    const container: DockerContainerType[] = []
+
     createEffect(()=>{
         refresh()
         API.GET("/docker/containers", setContainers, null, null)
     })
 
     const animateReload = () =>{
-        console.log("do")
         setReloadAnimation(true)
         setTimeout(() => setReloadAnimation(false), 500);
     }
+
 
     return(
         <div class={styles.container}>

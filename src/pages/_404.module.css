@@ -9,7 +9,7 @@
 }
 
 .container ._404{
-    font-size: 140px;
+    font-size: 240px;
     font-weight: 900;
-    color: var(--secondaryBlue);
+    color: var(--lightBlue);
 }
