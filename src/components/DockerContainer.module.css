@@ -1,0 +1,89 @@
+.container{
+    border-radius: 20px;
+    flex: 1 1 calc(25% - 20px);
+    position: relative;
+    overflow: hidden;
+    background-color: var(--marginalBlue);
+    border-color: var(--backGray);
+    border-style: solid;
+}
+
+.container .backcolor{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.container .panel{
+    z-index: 100;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    background-color: transparent;
+}
+
+.container .panel .top{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.container .panel .top .name{
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.container .panel .top .state{
+    flex: 1;
+    display: flex;
+    justify-content: end;
+}
+
+.container .panel .icon{
+    font-size: 48px;
+    align-self: center;
+    color: var(--midGray)
+}
+
+.container .panel .infoContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px
+}
+
+.container .panel .infoContainer .portContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.container .panel .infoContainer .portContainer .port{
+    font-weight: 700;
+}
+
+.container .panel .infoContainer .info{
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.container .panel .infoContainer .uptime{
+    background-color: white;
+    margin-top: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 15px;
+}

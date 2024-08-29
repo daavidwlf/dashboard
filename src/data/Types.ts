@@ -5,7 +5,19 @@ export type Admin  = {
     created: number
 }
 
-export type editAdminRequest = {
+export type EditAdminRequest = {
     userName: string
     email: string
+}
+
+export type DockerContainerType = {
+    name: string
+	publicPort: number
+	privatePort: number
+	ip: string
+	created: number
+	state: string
+	status: string
+	image: string
+	volume: string[]
 }

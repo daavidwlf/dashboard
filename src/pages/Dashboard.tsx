@@ -103,7 +103,7 @@ export default function Dashboard(){
                 <div class={styles.topBar}>
                     <div class={styles.topRight}>
                         <h1>Hi, {adminData()?.userName}</h1>
-                        <h3>{dateFormat.format(Date.now())}</h3>
+                        <h4>{dateFormat.format(Date.now())}</h4>
                     </div>
                     <div class={styles.topLeft}>
                         <PrimaryButton

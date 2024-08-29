@@ -6,9 +6,11 @@
   --midGray: rgb(105, 105, 112);
   --primeBlue: rgb(112, 134, 161);
   --accentBlue: rgb(134, 160, 191);
-  --lightBlue: rgba(112, 134, 161, 0.25);
+  --lightBlue: rgba(112, 134, 161, 0.2);
+  --marginalBlue: rgba(112, 134, 161, 0.1);
   --text: rgb(11, 13, 15);
   --red: rgb(181, 36, 36);
+  --green: rgba(33, 166, 69, 1)
 }
 
 body {
@@ -38,11 +40,19 @@ h2{
 }
 
 h3{
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+  color: var(--text);
+}
+
+h4{
   font-weight: 400;
   font-size: 16px;
   margin: 0px;
   padding: 0px;
-  color: var(--accentBlue);
+  color: var(--primeBlue);
 }
 
 p{

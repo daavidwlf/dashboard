@@ -1,6 +1,7 @@
 export enum Tabs {
+    SERVER,
     ADMINS,
-    USERS
+    USERS,
 }
 
 export enum customError {
