@@ -7,14 +7,19 @@ import { DockerContainerType } from '../data/Types'
 export default function ServerTap(){
 
     const [containers, setContainers] = createSignal<DockerContainerType[]>()
+    const [refresh, setRefresh] = createSignal(0)
+    const [reloadAnimation, setReloadAnimation] = createSignal(false)
 
     createEffect(()=>{
+        refresh()
         API.GET("/docker/containers", setContainers, null, null)
     })
 
-    createEffect(()=>{
-        console.log(containers())
-    })
+    const animateReload = () =>{
+        console.log("do")
+        setReloadAnimation(true)
+        setTimeout(() => setReloadAnimation(false), 500);
+    }
 
     return(
         <div class={styles.container}>
@@ -23,8 +28,14 @@ export default function ServerTap(){
                 <span class={styles.topRight}>
                     <button
                         class={styles.reload}
+                        onClick={() => {
+                            setRefresh(Date.now());
+                            animateReload();
+                        }}
                     >
-                        <i class="fa-regular fa-rotate-right"></i>
+                        <span class={reloadAnimation() ? styles.spinning : ""}>
+                            <i class="fa-regular fa-rotate-right"></i>
+                        </span>
                     </button>
                 </span>
             </div>

@@ -20,6 +20,12 @@
     align-items: center;
     justify-content: center;
     color: var(--primeBlue);
+    cursor: pointer;
+}
+
+.spinning {
+    transition: transform 0.5s ease-in-out; /* Add transition to spinning */
+    transform: rotate(360deg);
 }
 
 .container .docker .dockerTop {
