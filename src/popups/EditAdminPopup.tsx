@@ -35,7 +35,7 @@ export default function EditAdminPopup({item, setEditAdmin, setResultMessage}:Pr
 
             setLoading(true)
 
-            API.POST("/admins/edit/"+ item.adminId,
+            API.POST("/admin/edit/"+ item.adminId,
                 {
                     "userName": data.userName,
                     "email": data.email

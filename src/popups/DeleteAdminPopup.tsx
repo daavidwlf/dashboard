@@ -21,7 +21,7 @@ export default function DeleteAdminPopup({item, setDeleteAdmin, setResultMessage
     function del(){
         setLoading(true)
         setTimeout(()=>{
-        API.POST("/admins/delete/" + item?.adminId,
+        API.POST("/admin/delete/" + item?.adminId,
             null, 
             (response :AxiosResponse) => {
                 setLoading(false)
