@@ -11,20 +11,37 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px
+    gap: 10px;
 }
 
-.container .top .topRight .enterSearch{
+.container .top .topRight .enterContainer{
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--lightGray);
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.container .top .topRight .enterContainer .enterArrow{
     display: flex;
     align-items: center;
     justify-content: center;
-    border-style: solid;
-    border-width: 1px;
-    padding: 5px;
+    color: var(--lightGray);
+    border-color: var(--lightGray);
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 20px;
 }
+
+.container .top .topRight .enterContainer .enter{
+    display: flex;
+    color: var(--lightGray);
+    margin-top: -5px;
+}
+
 
 .container .top .topRight .add{
     font-size: 28px;

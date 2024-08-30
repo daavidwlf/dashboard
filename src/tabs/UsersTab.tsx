@@ -38,7 +38,7 @@ export default function UsersTab({rerender, setDeleteUser, setEditUser}:Props){
                     setUsers(response.data)
                 },
                 (err: AxiosError) => {
-                    console.log(err.response?.data.message)
+                    console.log(err.response?.data?.message)
                 },
                 null
             )
@@ -58,6 +58,17 @@ export default function UsersTab({rerender, setDeleteUser, setEditUser}:Props){
                 <div class={styles.top}>
                     <h2>Users</h2>
                     <span class={styles.topRight}>
+                       {    search() !== "" &&
+                            <span class={styles.enterContainer}>
+                                <button
+                                    class={styles.enterArrow}
+                                    type="submit"
+                                >
+                                    <i class="fa-light fa-turn-down-left"></i>
+                                </button>
+                                <span class={styles.enter}>enter</span>
+                            </span>
+                        }
                         <TextInput
                             icon={<i class="fa-light fa-magnifying-glass"></i>}
                             type="text"
@@ -65,12 +76,6 @@ export default function UsersTab({rerender, setDeleteUser, setEditUser}:Props){
                             value={search}
                             callback={setSearch}
                         />
-                        <button
-                            class={styles.enterSearch}
-                            type="submit"
-                        >
-                            <i class="fa-light fa-turn-down-left"></i>
-                        </button>
                     </span>
                 </div>
                 <div class={styles.list}>

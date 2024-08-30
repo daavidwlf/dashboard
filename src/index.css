@@ -3,6 +3,7 @@
 :root{
   --background: rgb(245, 245, 245);
   --backGray: rgb(237, 237, 240);
+  --lightGray: rgb(184, 184, 191);
   --midGray: rgb(105, 105, 112);
   --primeBlue: rgb(112, 134, 161);
   --accentBlue: rgb(134, 160, 191);
