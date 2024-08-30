@@ -69,7 +69,7 @@ export default function EditUserPopup({item, setEditUser, setResultMessage}:Prop
                 <>
                     <div class={styles.top}>
                         <span class={styles.id}>
-                            <i class="fa-duotone fa-solid fa-user-tie-hair"></i>
+                            <i class="fa-duotone fa-solid fa-user"></i>
                             <p>{item?.userId}</p>
                         </span>
                         <span class={styles.close}>
