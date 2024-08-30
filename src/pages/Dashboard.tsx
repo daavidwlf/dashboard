@@ -7,13 +7,15 @@ import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
 import EditAdminPopup from '../popups/EditAdminPopup';
-import { Admin } from '../data/Types';
+import { Admin, User } from '../data/Types';
 import API from '../data/API';
 import DeleteAdminPopup from '../popups/DeleteAdminPopup';
 import AddAdminPopup from '../popups/AddAdminPopup';
 import ResultPopup from '../popups/ResultPopup';
 import ServerTap from '../tabs/ServerTab';
 import convertToTab from '../utils/convertToTab';
+import DeleteUserPopup from '../popups/DeleteUserPopup';
+import EditUserPopup from '../popups/EditUserPopup';
 
 const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
@@ -38,6 +40,10 @@ export default function Dashboard(){
     const [editAdmin, setEditAdmin] = createSignal<Admin | null>(null)
     const [deleteAdmin, setDeleteAdmin] = createSignal<Admin | null>(null)
     const [addAdmin, setAddAdmin] = createSignal<boolean>(false)
+
+    const [editUser, setEditUser] = createSignal<User | null>(null)
+    const [deleteUser, setDeleteUser] = createSignal<User | null>(null)
+
     const [resultMessage, setResultMessage] = createSignal<string | null>(null)
 
     function logout(){
@@ -114,13 +120,15 @@ export default function Dashboard(){
                 </div>
                 <div class={styles.tabBox}>
                     {selected() === Tabs.ADMINS && <AdminsTab setEditAdmin={setEditAdmin} setDeleteAdmin={setDeleteAdmin} setAddAdmin={setAddAdmin} rerender={rerender}/>}
-                    {selected() === Tabs.USERS && <UsersTab/>}
+                    {selected() === Tabs.USERS && <UsersTab setEditUser={setEditUser} setDeleteUser={setDeleteUser} rerender={rerender}/>}
                     {selected() === Tabs.SERVER && <ServerTap/>}
                 </div>
             </div>
             {deleteAdmin() && <DeleteAdminPopup item={deleteAdmin()} setDeleteAdmin={setDeleteAdmin} setResultMessage={setResultMessage}/>}
             {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} setResultMessage={setResultMessage}/>}
             {addAdmin() && <AddAdminPopup setAddAdmin={setAddAdmin} setResultMessage={setResultMessage}/>}
+            {deleteUser() && <DeleteUserPopup item={deleteUser()} setDeleteUser={setDeleteUser} setResultMessage={setResultMessage}/>}
+            {editUser() && <EditUserPopup item={editUser()} setEditUser={setEditUser} setResultMessage={setResultMessage}/>}
             {resultMessage() && <ResultPopup resultMessage={resultMessage()} setResultMessage={setResultMessage} setRerender={setRerender}/>}
         </div>
     )

@@ -21,3 +21,11 @@ export type DockerContainerType = {
 	image: string
 	volume: string[]
 }
+
+export type User = {
+	userId: string
+    firstName: string
+	lastName: string
+    email: string
+    created: number
+}
