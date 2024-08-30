@@ -49,9 +49,23 @@
     cursor: pointer;
 }
 
+.container .err{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
 .container .list{
     display: flex;
     margin-top: 20px;
     gap: 10px;
     flex-direction: column;
+}
+
+.container .list .noResults{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
 }
