@@ -24,7 +24,7 @@ export default function EditAdminPopup({item, setEditAdmin, setResultMessage}:Pr
 
     function save(){
   
-        const changes = userName() !== "" || userName() !== ""
+        const changes = userName() !== "" || mail() !== ""
 
         const data  = {
             "userName": userName() === "" ?  item?.userName : userName(),
