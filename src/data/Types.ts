@@ -1,6 +1,31 @@
 export type Admin  = {
-    adminID: string
+    adminId: string
     userName: string
     email: string
-    Created: number
+    created: number
+}
+
+export type EditAdminRequest = {
+    userName: string
+    email: string
+}
+
+export type DockerContainerType = {
+    name: string
+	publicPort: number
+	privatePort: number
+	ip: string
+	created: number
+	state: string
+	status: string
+	image: string
+	volume: string[]
+}
+
+export type User = {
+	userId: string
+    firstName: string
+	lastName: string
+    email: string
+    created: number
 }

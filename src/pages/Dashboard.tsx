@@ -1,12 +1,21 @@
 import { useNavigate } from '@solidjs/router'
 import PrimaryButton from '../components/PrimaryButton'
 import styles from './Dashboard.module.css'
-import { createEffect, createResource, createSignal } from 'solid-js';
+import { createEffect, createSignal} from 'solid-js';
 import SideChip from '../components/SideChip';
 import {Tabs} from '../data/Enums';
 import AdminsTab from '../tabs/AdminsTab';
 import UsersTab from '../tabs/UsersTab';
-import fetchAdmin from '../utils/fetchAdmin';
+import EditAdminPopup from '../popups/EditAdminPopup';
+import { Admin, User } from '../data/Types';
+import API from '../data/API';
+import DeleteAdminPopup from '../popups/DeleteAdminPopup';
+import AddAdminPopup from '../popups/AddAdminPopup';
+import ResultPopup from '../popups/ResultPopup';
+import ServerTap from '../tabs/ServerTab';
+import convertToTab from '../utils/convertToTab';
+import DeleteUserPopup from '../popups/DeleteUserPopup';
+import EditUserPopup from '../popups/EditUserPopup';
 
 const dateFormat = new Intl.DateTimeFormat('de', {
     year: 'numeric',
@@ -21,22 +30,48 @@ export default function Dashboard(){
 
     const navigate = useNavigate()
 
-    const [adminID, setAdminID] = createSignal<string | null>(null);
-    const [adminData, adminErr] = createResource(adminID, fetchAdmin)
-    
-    const [selected, setSeleted] = createSignal<Tabs>(Tabs.ADMINS)
+    const [rerender, setRerender] = createSignal<number>(0)
+
+    const [adminId, setAdminId] = createSignal<string>();
+    const [adminData, setAdminData] = createSignal<Admin>()
+
+    const [selected, setSelected] = createSignal<Tabs>(Tabs.SERVER);
+
+    const [editAdmin, setEditAdmin] = createSignal<Admin | null>(null)
+    const [deleteAdmin, setDeleteAdmin] = createSignal<Admin | null>(null)
+    const [addAdmin, setAddAdmin] = createSignal<boolean>(false)
+
+    const [editUser, setEditUser] = createSignal<User | null>(null)
+    const [deleteUser, setDeleteUser] = createSignal<User | null>(null)
+
+    const [resultMessage, setResultMessage] = createSignal<string | null>(null)
 
     function logout(){
-        localStorage.removeItem("adminID")
-        localStorage.removeItem("X-JWT-Token")
+        localStorage.removeItem("adminId")
+        localStorage.removeItem("xJwtToken")
+        localStorage.removeItem("tab")
         navigate("/")  
     }
 
     createEffect(()=>{
-        const adminID = localStorage.getItem("adminID")
-        if(adminID){
-            setAdminID(adminID)
+        rerender()
+
+        const tabString = localStorage.getItem("tab")
+        var tab = convertToTab(tabString)
+        setSelected(tab)
+
+        const id = localStorage.getItem("adminId")
+        if(id){
+            setAdminId(id)
         }
+
+        API.GET("/admin/"+adminId(), setAdminData)
+    })
+
+    // tabs stay the same when reloading page
+    createEffect(()=>{
+        selected()
+        localStorage.setItem("tab", selected().toLocaleString())
     })
 
     return(
@@ -48,18 +83,25 @@ export default function Dashboard(){
                 </div>
                 <div class={styles.chips}>
                     <SideChip
+                        label='Server'
+                        tab={Tabs.SERVER}
+                        icon={<i class="fa-duotone fa-solid fa-server"></i>}
+                        selected={()=>selected()}
+                        setSelected={()=>setSelected(Tabs.SERVER)}
+                    />
+                    <SideChip
                         label='Admins'
                         tab={Tabs.ADMINS}
                         icon={<i class="fa-duotone fa-solid fa-user-tie-hair"></i>}
                         selected={()=>selected()}
-                        setSelected={()=>setSeleted(Tabs.ADMINS)}
+                        setSelected={()=>setSelected(Tabs.ADMINS)}
                     />
                     <SideChip
                         label='Users'
                         tab={Tabs.USERS}
                         icon={<i class="fa-duotone fa-solid fa-user"></i>}
                         selected={()=>selected()}
-                        setSelected={()=>setSeleted(Tabs.USERS)}
+                        setSelected={()=>setSelected(Tabs.USERS)}
                     />
                 </div>
             </div>
@@ -67,7 +109,7 @@ export default function Dashboard(){
                 <div class={styles.topBar}>
                     <div class={styles.topRight}>
                         <h1>Hi, {adminData()?.userName}</h1>
-                        <h3>{dateFormat.format(Date.now())}</h3>
+                        <h4>{dateFormat.format(Date.now())}</h4>
                     </div>
                     <div class={styles.topLeft}>
                         <PrimaryButton
@@ -77,10 +119,17 @@ export default function Dashboard(){
                     </div>
                 </div>
                 <div class={styles.tabBox}>
-                    {selected() === Tabs.ADMINS && <AdminsTab/>}
-                    {selected() === Tabs.USERS && <UsersTab/>}
+                    {selected() === Tabs.ADMINS && <AdminsTab setEditAdmin={setEditAdmin} setDeleteAdmin={setDeleteAdmin} setAddAdmin={setAddAdmin} rerender={rerender}/>}
+                    {selected() === Tabs.USERS && <UsersTab setEditUser={setEditUser} setDeleteUser={setDeleteUser} rerender={rerender}/>}
+                    {selected() === Tabs.SERVER && <ServerTap/>}
                 </div>
             </div>
+            {deleteAdmin() && <DeleteAdminPopup item={deleteAdmin()} setDeleteAdmin={setDeleteAdmin} setResultMessage={setResultMessage}/>}
+            {editAdmin() && <EditAdminPopup item={editAdmin()} setEditAdmin={setEditAdmin} setResultMessage={setResultMessage}/>}
+            {addAdmin() && <AddAdminPopup setAddAdmin={setAddAdmin} setResultMessage={setResultMessage}/>}
+            {deleteUser() && <DeleteUserPopup item={deleteUser()} setDeleteUser={setDeleteUser} setResultMessage={setResultMessage}/>}
+            {editUser() && <EditUserPopup item={editUser()} setEditUser={setEditUser} setResultMessage={setResultMessage}/>}
+            {resultMessage() && <ResultPopup resultMessage={resultMessage()} setResultMessage={setResultMessage} setRerender={setRerender}/>}
         </div>
     )
 }

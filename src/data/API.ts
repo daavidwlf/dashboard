@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 const API:any = []
 
@@ -13,25 +14,48 @@ if (!dev){
 }
 
 
-API.GET = (query:string, callback:Function, callbackErr?:Function) => {
-    const token = localStorage.getItem("X-JWT-Token") || "none";
+API.GET = (query:string, callback:Function, callbackErr?:Function, setLoading?:Function) => {
+
+    if(setLoading) setLoading(true)
+
+    const token = localStorage.getItem("xJwtToken") || "none";
+    const id = localStorage.getItem("adminId") || "none";
 
     axios.get(url + query, {
         headers: {
-            "X-JWT-Token": token,
+            "xJwtToken": token,
             "Content-Type": "application/json",
+            //temp
+            "ID": id
         },
         withCredentials: true
     })
-    .then(response => callback(response.data))
-    .catch(err => callbackErr? callbackErr(err) : console.log(err))
+    .then((response:AxiosResponse) => {
+        callback(response.data)
+        if(setLoading) setLoading(false)
+    })
+    .catch((err: AxiosError) => {
+        callbackErr? callbackErr(err) : console.log(err)
+        if(setLoading) setLoading(false)
+    })
 }
 
 API.POST = async (query: string, data: any, callback: Function, callbackErr?: Function, setLoading?: Function) => {
     if (setLoading) setLoading(true);
 
+    const token = localStorage.getItem("xJwtToken") || "none";
+    const id = localStorage.getItem("adminId") || "none";
+
     try {
-        const response = await axios.post(url + query, JSON.stringify(data));
+        const response = await axios.post(url + query, JSON.stringify(data),
+    {
+        headers: {
+            "xJwtToken": token,
+            "Content-Type": "application/json",
+            "ID": id
+        },
+        withCredentials: true
+    });
         if (setLoading) setLoading(false);
         callback(response);
     } catch (err) {

@@ -1,6 +1,6 @@
 import { createSignal, JSX } from 'solid-js'
 import styles from './SideChip.module.css'
-import Tabs from '../data/Enums'
+import { Tabs } from '../data/Enums'
 
 type ChipProps = {
     label: string

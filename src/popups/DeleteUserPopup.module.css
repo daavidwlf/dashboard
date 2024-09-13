@@ -1,0 +1,60 @@
+.container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(20,20,20,0.2);
+    backdrop-filter: blur(2px);
+}
+
+.container .panel{
+    background-color: white;
+    width: 500px;
+    height: 200px;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .panel .top{
+   display: flex;
+   margin-bottom: 20px;
+   width: 100%;
+}
+
+.container .panel .top .id{
+    display: flex; 
+    flex: 2;
+    align-items: center;
+    color: var(--accentBlue);
+    gap: 10px;
+    font-size: 18px;
+}
+
+.container .panel .top .close{
+    display: flex; 
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.container .panel .message{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.container .panel .delete{
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+

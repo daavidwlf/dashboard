@@ -6,10 +6,10 @@ const [isAuthenticated, setIsAuthenticated] = createSignal(false);
 
 const validateToken = () => {
   return new Promise((resolve, reject) => {
-    const token = localStorage.getItem("X-JWT-Token");
-    const adminID = localStorage.getItem("adminID");
+    const token = localStorage.getItem("xJwtToken");
+    const adminId = localStorage.getItem("adminId");
 
-    if (adminID == null || token == null) {
+    if (adminId == null || token == null) {
       setIsAuthenticated(false);
       resolve(false);
       return;
@@ -18,8 +18,8 @@ const validateToken = () => {
     API.POST(
       "/admin/validateJWT",
       {
-        adminID: adminID,
-        "x-jwt-token": token,
+        "adminId": adminId,
+        "xJwtToken": token,
       },
       (response: AxiosResponse) => {
         setIsAuthenticated(true);

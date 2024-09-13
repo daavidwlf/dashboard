@@ -8,12 +8,14 @@ type textInputProps = {
     onClick?: JSX.EventHandlerUnion<HTMLInputElement, MouseEvent>
     type: string
     value: Function
-
+    onKeyPress?: JSX.EventHandlerUnion<HTMLInputElement, KeyboardEvent>;
 }
 
-export default function TextInput({placeholder, icon, callback, type , value, onClick}: textInputProps){
+export default function TextInput({placeholder, icon, callback, type , value, onClick, onKeyPress}: textInputProps){
     return(
-        <div class={styles.container}>
+        <div 
+            class={styles.container}
+        >
             {icon && 
                 <span class={styles.icon}>
                     {icon}
@@ -26,6 +28,7 @@ export default function TextInput({placeholder, icon, callback, type , value, on
                 value={value()}
                 onInput={element => callback(element.currentTarget.value)}
                 onClick={onClick}
+                onKeyPress={onKeyPress}
             />
         </div>
     )

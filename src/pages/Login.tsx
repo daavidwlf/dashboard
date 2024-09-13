@@ -41,10 +41,11 @@ export default function Login(){
                 "password": password(),
             }, 
             (response: AxiosResponse) => {
-                const token:string = response?.data["X-JWT-Token"]
-                const adminID:string = response?.data["adminID"]
-                localStorage.setItem("X-JWT-Token",  token)
-                localStorage.setItem("adminID",  adminID)
+                const token:string = response?.data["xJwtToken"]
+                const adminId:string = response?.data["adminId"]
+
+                localStorage.setItem("xJwtToken",  token)
+                localStorage.setItem("adminId",  adminId)
                 navigate('/dashboard')
             },
             (err: AxiosError) => {
@@ -56,7 +57,6 @@ export default function Login(){
                     setErr(customError.PASSWORD);
                 } else {
                     setErr(customError.UNKNOWN);
-                    console.log(err)
                 }
             },
             setLoading

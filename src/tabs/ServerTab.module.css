@@ -1,0 +1,49 @@
+.container{
+
+}
+
+.container .top{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.container .top .topRight{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.container .top .topRight .reload{
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primeBlue);
+    cursor: pointer;
+}
+
+.spinning {
+    transition: transform 0.5s ease-in-out; /* Add transition to spinning */
+    transform: rotate(360deg);
+}
+
+.container .docker .dockerTop {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.container .docker .dockerTop .dockerIcon{
+    font-size: 18px;
+    color: var(--primeBlue);
+}
+
+.container .docker .dockerContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
